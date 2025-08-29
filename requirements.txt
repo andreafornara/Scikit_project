@@ -1,0 +1,15 @@
+ipython
+jupyterlab
+numpy
+scipy
+pandas
+awkward
+matplotlib
+pyarrow
+pyyaml
+pytest
+cpymad
+seaborn
+scikit-learn
+ipynb-py-convert
+opencv-contrib-python
