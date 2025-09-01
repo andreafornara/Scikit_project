@@ -167,10 +167,6 @@ X
 # %%
 #Let's do some pairplots to look at the data
 sns.pairplot(pd.concat([X, y], axis=1), hue='Churn')
-
-
-
-
 # %%
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
