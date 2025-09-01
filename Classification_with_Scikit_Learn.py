@@ -187,17 +187,18 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
-models = [ 
-  KNeighborsClassifier(),
-  SVC(kernel="linear"),
-  SVC(kernel="rbf"),
-  GaussianProcessClassifier(1.0 * RBF(1.0)),
-  DecisionTreeClassifier(),
-  RandomForestClassifier(),
-  MLPClassifier(max_iter=1000),
-  AdaBoostClassifier(),
-  GaussianNB(),
-  QuadraticDiscriminantAnalysis(),
+
+fast_models = [
+    # make_pipeline(StandardScaler(), LinearSVC(max_iter=5000)),
+    DecisionTreeClassifier(max_depth=6, random_state=0),
+    RandomForestClassifier(n_estimators=200, n_jobs=-1, random_state=0),
+    make_pipeline(StandardScaler(), SVC(kernel="rbf", C=1.0, gamma="scale", max_iter=2000, cache_size=1000)),
+    make_pipeline(StandardScaler(), KNeighborsClassifier(n_neighbors=15, algorithm="kd_tree", n_jobs=-1)),
+    make_pipeline(StandardScaler(), MLPClassifier(hidden_layer_sizes=(50,), max_iter=300, early_stopping=True, random_state=0)),
+    GaussianNB(),
+    AdaBoostClassifier(n_estimators=100, random_state=0),
+    # Kernel approximation instead of GPC:
+    # make_pipeline(StandardScaler(), RBFSampler(gamma=1.0, n_components=500, random_state=0), SGDClassifier(max_iter=2000))
 ]
 
 def new_train_eval(model):
@@ -218,41 +219,3 @@ def new_train_eval(model):
 for model in models:
   print('Model is', model.__class__.__name__)
   new_train_eval(model)
-
-# %%
-"""
-### Exercise 2
-
-
-- load the churn dataset `churn.csv`
-- assign the `Churn` column to a variable called `y`
-- assign the other columns to a variable called `features`
-- select numerical columns with `features.select_dtypes` and asign them to a variable called `X`
-- split data into train/test with test_size=0.3 and random_state=42
-- modify the `train_eval` function defined earlier to test and compare different models and hyperparameters combinations.
-
-You can find a list of models available [here](http://scikit-learn.org/stable/auto_examples/classification/plot_classifier_comparison.html).
-
-"""
-
-# %%
-
-
-# %%
-"""
-### Exercise 3
-
-Define a new function that also keeps track of the time required to train the model. Your new function will look like:
-
-```python
-def train_eval_time(model):
-  # YOUR CODE HERE
-  
-  return model, train_acc, test_acc, dt
-```
-"""
-
-# %%
-from time import time
-
-# %%
