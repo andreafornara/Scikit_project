@@ -11,5 +11,6 @@ pytest
 cpymad
 seaborn
 scikit-learn
+torch
 ipynb-py-convert
 opencv-contrib-python

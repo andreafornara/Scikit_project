@@ -154,5 +154,3 @@ plt.show()
 
 # From the silhouette score we can see that, after eps = 1, we get a stable maximum in silhouette
 # This confirms that we probably have two clusters
-
-# %%
